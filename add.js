@@ -24,7 +24,16 @@ async function add() {
     if (response.addItem === "Add an Employee") {
         //get all the roles within the role table/object
         let getAllRoles = roleArray.map(a => a.title);
+
+        //gets the single instance of manager within the Array/object 
         let getAllManagers = employeeArray.map(a => a.manager_id);
+        let allManagers = [];
+        getAllManagers.forEach(Manager => {
+            if (!allManagers.includes(Manager)) {
+                allManagers.push(Manager)
+            }
+            return allManagers;
+        })
 
         const response = await inquirer.prompt([
             {
@@ -47,7 +56,7 @@ async function add() {
                 type: 'list',
                 name: 'employeeManger',
                 message: 'What is the employee’s manager? ',
-                choices: getAllManagers
+                choices: allManagers
             }
         ]);
 
