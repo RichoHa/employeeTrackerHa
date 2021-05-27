@@ -91,8 +91,44 @@ async function add() {
 
         console.log(`Department ${response.addedDepartment} was added`);
 
-    } else {
+    } else if (response.addItem === "Add a role") {
+        let roleArrayMapped = roleArray.map(a => a.title);
+        let departmentArrayMapped = departmentArray.map(a => a.name);
 
+        const response = await inquirer.prompt([
+            {
+                type: 'input',
+                name: 'roleName',
+                message: 'What is the new role called?',
+                validate: (roleName) => {
+                    if (!roleArrayMapped.includes(roleName)) {
+                        return true;
+                    } else {
+                        console.log(`(Error: This role already exists!)`);
+                    }
+                }
+            },
+            {
+                type: 'input',
+                name: 'roleSalary',
+                message: 'What is the salary for the new role?',
+                validate: (roleSalary) => {
+                    if (/^\d+$/.test(roleSalary)) {
+                        return true;
+                    } else {
+                        console.log(`(Error: This input is incorrect!)`);
+                    }
+                }
+            },
+            {
+                type: 'list',
+                name: 'roleDepartment',
+                message: 'What is the department the new role is in?',
+                choices: departmentArrayMapped
+            }
+        ]);
+
+        console.log(`The role ${response.roleName}, with salary ${response.roleSalary} was added to department ${response.roleDepartment}`);
     }
 }
 
