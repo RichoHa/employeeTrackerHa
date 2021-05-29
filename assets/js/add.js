@@ -1,22 +1,23 @@
 const inquirer = require("inquirer");
-let roleArray = [
-    { "id": "1", "title": "Mechanical Engineer", "salary": "100000", "department_id": "Engineering" },
-    { "id": "2", "title": "Pharmacy Boss", "salary": "10000", "department_id": "Pharmacy" },
-]
 
-let employeeArray = [
-    { "id": "1", "first_name": "John", "last_name": "Ha", "role_id": "Engineer", "manager_id": "Richard Ha" },
-    { "id": "2", "first_name": "Kimmy", "last_name": "Tran", "role_id": "Pharmacy", "manager_id": "Richo Ha" },
-    { "id": "3", "first_name": "Daniel", "last_name": "Ha", "role_id": "Engineer", "manager_id": "Richo Ha" }
-]
+// let roleArray = [
+//     { "id": "1", "title": "Mechanical Engineer", "salary": "100000", "department_id": "Engineering" },
+//     { "id": "2", "title": "Pharmacy ass", "salary": "10000", "department_id": "Pharmacy" },
+// ]
 
-let departmentArray = [
-    { "id": "1", "name": "Engineering" },
-    { "id": "2", "name": "Pharmacy" }
-]
+// let employeeArray = [
+//     { "id": "1", "first_name": "John", "last_name": "Ha", "role_id": "Mechanical Engineer", "manager_id": "Richard Ha" },
+//     { "id": "2", "first_name": "Kimmy", "last_name": "Tran", "role_id": "Pharmacy ass", "manager_id": "Richo Ha" },
+//     { "id": "3", "first_name": "Daniel", "last_name": "Ha", "role_id": "Mechanical Engineer", "manager_id": "Richo Ha" }
+// ]
+
+// let departmentArray = [
+//     { "id": "1", "name": "Engineering" },
+//     { "id": "2", "name": "Pharmacy" }
+// ]
 
 //Questions Regarding adding departments, roles and employees.
-async function add() {
+async function add(roleArray, employeeArray, departmentArray) {
     const response = await inquirer.prompt([
         {
             type: 'list',
@@ -133,4 +134,6 @@ async function add() {
 }
 
 
-add()
+// add()
+
+module.exports.add = add;
