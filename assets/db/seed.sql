@@ -11,10 +11,9 @@ create table employee(
   manager VARCHAR(30) NULL,
   primary key (id)
 );
-SELECT
-  *
-FROM
-  employee;
+
+SELECT * FROM employee;
+
 insert into
   employee (
     first_name,
@@ -33,6 +32,7 @@ values
     "100000",
     "Ashley Rodriguez"
   );
+  
 insert into
   employee (
     first_name,

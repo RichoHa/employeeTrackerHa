@@ -1,30 +1,11 @@
-// //insert required libraries
-// require('dotenv').config();
-// const inquirer = require("inquirer");
-// const cTable = require("console.table");
-
-
-// async function connecttoDB() {
-//     const mysql = require('mysql2/promise');
-
-//     const connection = await mysql.createConnection({
-//         host: "127.0.0.1",
-//         port: 3306,
-//         process.env.DB_USER,
-//         process.env.DB_PASS,
-//         database: "employeeDB",
-//     })
-//     const [first_name, last_name, title, department, salary, manager] = await connection.execute('SELECT * FROM `employee`');
-// }
-
-// connecttoDB();
-
 const inquirer = require("inquirer");
-let addFile = require(`./assets/js/add.js`)
-// console.log(addFunction);
-// console.log(addFunction.module);
-// console.log(typeof addFunction.module);
+const addFile = require(`./assets/js/add.js`)
+const connection = require(`./assets/config/connection.js`)
 
+
+// let viewFile = require(`./assets/js/view.js`)
+
+// Example/Seed Information to get code working
 let roleArray = [
     { "id": "1", "title": "Mechanical Engineer", "salary": "100000", "department_id": "Engineering" },
     { "id": "2", "title": "Pharmacy ass", "salary": "10000", "department_id": "Pharmacy" },
@@ -41,9 +22,10 @@ let departmentArray = [
     { "id": "2", "name": "Pharmacy" }
 ]
 
-function code(roleArray, employeeArray, departmentArray) {
-    addFile.add(roleArray, employeeArray, departmentArray);
-
+//Code Function
+async function code(roleArray, employeeArray, departmentArray) {
+    await connection.connection();
+    await addFile.add(roleArray, employeeArray, departmentArray);
 }
 
 code(roleArray, employeeArray, departmentArray)
