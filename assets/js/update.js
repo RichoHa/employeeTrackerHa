@@ -15,7 +15,7 @@ async function update() {
         }
     ]);
 
-    if (viewItem.viewItem === "Employee's Role") {
+    if (viewItem.viewItem === "Employee's Details") {
 
         const connection = await mysql.createConnection(connectionFile.connection);
         const employeeDetails = await connection.query(
@@ -193,7 +193,121 @@ async function update() {
         }
     } else if (viewItem.viewItem === "Remove Employee") {
 
+        const connection = await mysql.createConnection(connectionFile.connection);
 
+        const employeeDetails = await connection.query(
+            `SELECT id, first_name, last_name
+            FROM employee`);
+
+        let listEmployeeNames = [];
+        employeeDetails[0].forEach(element => {
+            listEmployeeNames.push(`${element.first_name} ${element.last_name}`)
+        })
+
+        const viewItem = await inquirer.prompt([
+            {
+                type: 'list',
+                name: 'ChosenOne',
+                message: 'Which employee do you want to delete?',
+                choices: listEmployeeNames,
+            }
+        ]);
+
+        let EmployeeID;
+        employeeDetails[0].forEach(element => {
+            if (viewItem.ChosenOne === `${element.first_name} ${element.last_name}`)
+                EmployeeID = element.id;
+        })
+        //DELETE FROM table1 WHERE condition
+        await connection.query(`delete from employee where id = ${EmployeeID}`);
+        const RoleChange = await connection.query(
+            `SELECT first_name, last_name, title, department_name, salary, manager_name 
+            FROM employee
+            left join role on employee.role_id = role.id
+            left join manager on employee.manager_id = manager.id
+            left join department on department.id = role.department_id
+            order by first_name`)
+        console.table(RoleChange[0]);
+        console.log(`deleted ${viewItem.ChosenOne}`);
+        connection.end();
+    } else if (viewItem.viewItem === "Remove Role") {
+
+        const connection = await mysql.createConnection(connectionFile.connection);
+
+        const roleDetails = await connection.query(
+            `SELECT id, title, salary
+            FROM role`);
+
+        let listRoles = [];
+        roleDetails[0].forEach(element => {
+            listRoles.push(`${element.title}`)
+        })
+
+        console.log(`Current Roles are: `, listRoles)
+        const viewItem = await inquirer.prompt([
+            {
+                type: 'list',
+                name: 'ChosenRole',
+                message: 'Which role do you want to delete?',
+                choices: listRoles,
+            }
+        ]);
+
+        let RoleID;
+        roleDetails[0].forEach(element => {
+            if (viewItem.ChosenRole === `${element.title}`)
+                RoleID = element.id;
+        })
+        //DELETE FROM table1 WHERE condition
+        await connection.query(`delete from role where id = ${RoleID}`);
+
+        const roleDetails2 = await connection.query(
+            `SELECT id, title, salary
+            FROM role`);
+        console.table(roleDetails2[0]);
+
+        console.log(`deleted ${viewItem.ChosenRole}`);
+        connection.end();
+    }
+    else if (viewItem.viewItem === "Remove Manager") {
+
+        const connection = await mysql.createConnection(connectionFile.connection);
+
+        const roleDetails = await connection.query(
+            `SELECT id, manager_name
+            FROM manager`);
+        console.table(roleDetails[0])
+
+        let listRoles = [];
+        roleDetails[0].forEach(element => {
+            listRoles.push(`${element.title}`)
+        })
+
+        console.log(`Current Roles are: `, listRoles)
+        const viewItem = await inquirer.prompt([
+            {
+                type: 'list',
+                name: 'ChosenRole',
+                message: 'Which role do you want to delete?',
+                choices: listRoles,
+            }
+        ]);
+
+        let RoleID;
+        roleDetails[0].forEach(element => {
+            if (viewItem.ChosenRole === `${element.title}`)
+                RoleID = element.id;
+        })
+        //DELETE FROM table1 WHERE condition
+        await connection.query(`delete from role where id = ${RoleID}`);
+
+        const roleDetails2 = await connection.query(
+            `SELECT id, title, salary
+            FROM role`);
+        console.table(roleDetails2[0]);
+
+        console.log(`deleted ${viewItem.ChosenRole}`);
+        connection.end();
     }
 }
 module.exports.update = update;

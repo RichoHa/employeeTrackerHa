@@ -6,7 +6,7 @@ create table employee(
   id int unsigned primary key auto_increment,
   first_name varchar(30) not null,
   last_name varchar(30) not null,
-  role_id int unsigned not null references role(id),
+  role_id int unsigned references role(id),
   manager_id int unsigned references manager(id)
 );
 create table role(
