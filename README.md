@@ -28,7 +28,7 @@ https://www.youtube.com/watch?v=BM1B7GXVnRI
 https://github.com/RichoHa/employeeTrackerHa
 
 # ScreenShot
-
+![Application Screenshot](./assets/images/screeny.PNG )
 
 # Technology_Used
 -   dotenv https://www.npmjs.com/package/dotenv
