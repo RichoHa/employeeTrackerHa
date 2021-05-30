@@ -1,4 +1,7 @@
 const inquirer = require("inquirer");
+const cTable = require('console.table');
+const mysql = require('mysql2/promise');
+const connectionFile = require(`../config/connection.js`)
 
 async function add(roleArray, employeeArray, departmentArray) {
     const response = await inquirer.prompt([

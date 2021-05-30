@@ -1,12 +1,13 @@
 //insert required libraries
-require('dotenv').config()
+require('dotenv').config({ path: __dirname + '/./../../.env' })
 
 const connection = {
-    host: "127.0.0.1",
+    host: process.env.DB_HOST,
     port: 3306,
-    user: "root",
-    password: "Duc.Ha.93",
-    database: "employeeDB",
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: "employeeDB"
 }
 
 module.exports.connection = connection;
+
