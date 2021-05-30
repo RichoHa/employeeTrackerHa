@@ -273,40 +273,40 @@ async function update() {
 
         const connection = await mysql.createConnection(connectionFile.connection);
 
-        const roleDetails = await connection.query(
+        const managerDetails = await connection.query(
             `SELECT id, manager_name
             FROM manager`);
-        console.table(roleDetails[0])
+        console.table(managerDetails[0])
 
-        let listRoles = [];
-        roleDetails[0].forEach(element => {
-            listRoles.push(`${element.title}`)
+        let listManager = [];
+        managerDetails[0].forEach(element => {
+            listManager.push(`${element.manager_name}`)
         })
 
-        console.log(`Current Roles are: `, listRoles)
+        console.log(`Current Managers are: `, listManager)
         const viewItem = await inquirer.prompt([
             {
                 type: 'list',
-                name: 'ChosenRole',
-                message: 'Which role do you want to delete?',
-                choices: listRoles,
+                name: 'ChosenManager',
+                message: 'Which manager do you want to delete?',
+                choices: listManager,
             }
         ]);
 
-        let RoleID;
-        roleDetails[0].forEach(element => {
-            if (viewItem.ChosenRole === `${element.title}`)
-                RoleID = element.id;
+        let ManagerID;
+        managerDetails[0].forEach(element => {
+            if (viewItem.ChosenManager === `${element.manager_name}`)
+                ManagerID = element.id;
         })
         //DELETE FROM table1 WHERE condition
-        await connection.query(`delete from role where id = ${RoleID}`);
+        await connection.query(`delete from manager where id = ${ManagerID}`);
 
-        const roleDetails2 = await connection.query(
-            `SELECT id, title, salary
-            FROM role`);
-        console.table(roleDetails2[0]);
+        const managerDetails2 = await connection.query(
+            `SELECT id, manager_name
+            FROM manager`);
+        console.table(managerDetails2[0]);
 
-        console.log(`deleted ${viewItem.ChosenRole}`);
+        console.log(`deleted ${viewItem.ChosenManager}`);
         connection.end();
     }
 }
